@@ -27,7 +27,7 @@ class myClass:
                 self.FOLDERS.append(item)
         self.FILES.sort()
         self.FOLDERS.sort()
-        self.ALL = self.FOLDERS + self.FILES  # will hold all folders and files
+        self.ALL = ["..."] + self.FOLDERS + self.FILES  # will hold all folders and files
 
     def select_folder(self, folder):
         # you can use this to select folder and "open" it
