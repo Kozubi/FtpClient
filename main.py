@@ -32,7 +32,7 @@ kv = """
                 Label:
                     text: "Here will be file list"
 
-<MyBoxApp>:hhh
+<MyBoxApp>:
     canvas:
         # Color:
         #     rgba: (.7,.7,1,.9)
