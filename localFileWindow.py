@@ -34,14 +34,14 @@ class LocalFile(GridLayout):
     def sec_init(self, *args):
         self.clear_widgets()
         self.files = myClass()
-        self.add_widget(Label(size_hint_y = None, text=self.files.PATH, height=50))
+        self.add_widget(Label(size_hint_y = None, text=self.files.PATH, height=25))
         h = 0 # height of the layout
         for item in self.files.ALL:
             btn = Button(text=str(item), size_hint_y = None, on_press=self.btn_press)
-            btn.height = 100
+            btn.height = 50
             self.add_widget(btn)
             h += btn.height
-        self.height = h
+        self.height = h+25
 
     def btn_press(self, btn):
         print(btn.text)

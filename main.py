@@ -10,6 +10,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.lang import Builder
 from kivy.core.window import Window
+from localFileWindow import MainFrame
 
 # TODO dodac klasy obiektow (plik, folder) w celu ich wyświetlania w oknach
 # TODO dodac metody przesylania/ kopiowania na FTP (ftplib)
@@ -53,7 +54,7 @@ kv = """
             # przycisk do usuwania - przezucania rzeczy z FTP (ma byc strzalka w dol)
                 text: "-"
 
-        MyBoxLayout:
+        MainFrame:
             size_hint_y: .45
 
 """
