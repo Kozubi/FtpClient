@@ -19,6 +19,7 @@ class myClass:
     def work(self):
         # function for getting all files/folders in selected directory
         os.chdir(self.PATH)
+        print("PATH", self.PATH)
         for item in os.listdir(self.PATH):
             # will check if item in folder is actually file (or folder) and put it in correct list
             if os.path.isfile(item):
@@ -28,7 +29,6 @@ class myClass:
         self.FILES.sort()
         self.FOLDERS.sort()
         self.ALL = ["..."] + self.FOLDERS + self.FILES  # will hold all folders and files
-
 
 
     def select_folder(self, folder):
@@ -43,15 +43,12 @@ class myClass:
         # TODO add exception when no folder will be above
         
         temp_path = self.PATH.split("\\")
-        print(temp_path)
         temp_path = temp_path[0:-1]
-        print(temp_path)
         self.PATH = "\\".join(temp_path)
         # TODO add to get if platform is android or NOT!!
         if self.PATH in ["C:", "D:", "E:"]: #windows only!
             if "\\" not in self.PATH:
                 self.PATH += "\\"
-            print("PATH", self.PATH)
         os.chdir(self.PATH)
         self.FOLDERS, self.FILES, self.ALL = [], [], []
         self.work()
