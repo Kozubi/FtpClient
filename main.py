@@ -18,7 +18,7 @@ kv = """
 <MyButton>:
     # jakis tymczasowy button
     background_color: (1,0,0,1)
-    text:"Soema"
+    text:"Siema"
     size_hint: (.35,1)
     #height: 40
 
@@ -58,11 +58,13 @@ kv = """
             Button:
             # przycisk do dodawania rzeczy do FTP (ma byc strzalka ^)
                 text: "+"
+                on_press: root.ids.MainFrame.ids.LocalFile.getting_sel_files()
             Button:
             # przycisk do usuwania - przezucania rzeczy z FTP (ma byc strzalka w dol)
                 text: "-"
 
         MainFrame:
+            id: MainFrame
             size_hint_y: .45
             # canvas.before:
             # #     Color:
@@ -92,6 +94,7 @@ class MyBoxApp(BoxLayout):
 
 class MyApp(App):
     Window.fullscreen = False
+    Window.size = (400, 800)
     def build(self):
         # display a button with the text : Hello QPython 
         return MyBoxApp()

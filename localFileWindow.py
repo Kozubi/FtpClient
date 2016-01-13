@@ -90,19 +90,16 @@ class LocalFile(GridLayout):
 
 
             #image = Label(size_hint_x = .2, text="Image")
-            btn = Button(text=str(item), size_hint_x = .8, on_press=self.btn_press,
-                         background_color=(0,.3,0,1), color=(1,1,1,1),
+            btn = Button(text=str(item), size_hint_x = .8,
+                         background_color=(0,.3,0,1), color=(1,1,1,1), on_press=self.btn_press,
                          background_normal="", background_pressed="")
+
+            frame.sel = False # button selected to obtain button which was chosen
 
             label = Label(text="5678 kb", size_hint_x = .15, color=(0,0,0,1))
             frame.add_widget(img)
             frame.add_widget(btn)
             frame.add_widget(label)
-
-            #button.on_press  = self.btn_press
-
-            #btn.ids.btnFile.on_press = self.btn_press(btn.ids.btnFile)
-
             frame.selected = 0 # will be used for toggle
             frame.height = 35
             frame.background_color = (0,1,.2,1)
@@ -110,11 +107,13 @@ class LocalFile(GridLayout):
             h += frame.height
             h+= 2 #this is spacing!!
 #        print("image source", self.image.source)
-        self.height = h+2
+        l = Label(size_hint_y=None, height=10)
+        l.sel = False
+        self.add_widget(l)
+        self.height = h+2+10
 
     def btn_press(self, btn):
-        print(btn)
-        print(btn.text)
+        #print(btn.text)
         if btn.text == "...":
             self.files.move_up()
             Clock.schedule_once(self.sec_init, 0.01)
@@ -124,18 +123,34 @@ class LocalFile(GridLayout):
             # will change (select) button to highlight this to be needed to upload
             # second press will deselect it - use btn.selected property
             if btn.background_color == [1,0,0,1]:
-                btn.background_color = (0,1,.2,1)
+                btn.background_color = (0,.3,0,1)
+                btn.parent.sel = False
             else:
                 btn.background_color = (1,0,0,1)
+                btn.parent.sel = True
 
         elif os.path.isdir(btn.text):
             self.files.select_folder(btn.text)
             Clock.schedule_once(self.sec_init, 0.01)
             #self.sec_init()
+    def getting_sel_files(self):
+        selectedFiles = []
+        self.fileList = []
+        # function to obtain selected files
+        for i in self.children:
+            if i.sel == True:
+                selectedFiles.append(i.children[1].text)
+
+        for x in selectedFiles:
+            x = self.files.PATH + "//" + x
+            self.fileList.append(x)
+
+        print(self.fileList)
 
 if __name__ == "__main__":
     class MyApp(App):
         Window.fullscreen = False
+
         def build(self):
             return MainFrame()
 
