@@ -18,19 +18,18 @@ class myClass:
 
     def work(self):
         # function for getting all files/folders in selected directory
-        try:
-            os.chdir(self.PATH)
-            for item in os.listdir(self.PATH):
-                # will check if item in folder is actually file (or folder) and put it in correct list
-                if os.path.isfile(item):
-                    self.FILES.append(item)
-                elif os.path.isdir(item):
-                    self.FOLDERS.append(item)
-            self.FILES.sort()
-            self.FOLDERS.sort()
-            self.ALL = ["..."] + self.FOLDERS + self.FILES  # will hold all folders and files
-        except WindowsError:
-            pass
+        os.chdir(self.PATH)
+        for item in os.listdir(self.PATH):
+            # will check if item in folder is actually file (or folder) and put it in correct list
+            if os.path.isfile(item):
+                self.FILES.append(item)
+            elif os.path.isdir(item):
+                self.FOLDERS.append(item)
+        self.FILES.sort()
+        self.FOLDERS.sort()
+        self.ALL = ["..."] + self.FOLDERS + self.FILES  # will hold all folders and files
+
+
 
     def select_folder(self, folder):
         # you can use this to select folder and "open" it

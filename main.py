@@ -1,4 +1,3 @@
-
 #-*-coding:utf8;-*-
 #qpy:2
 #qpy:kivy
@@ -33,12 +32,19 @@ kv = """
                 Label:
                     text: "Here will be file list"
 
-<MyBoxApp>:
+<MyBoxApp>:hhh
+    canvas:
+        # Color:
+        #     rgba: (.7,.7,1,.9)
+        Rectangle:
+            source: "images/bckg.jpg"
+            size: self.size
+            pos: self.pos
 
     BoxLayout:
         orientation: "vertical"
         Button:
-            text: "Settongs"
+            text: "SETTINGS"
             size_hint_y: 0.05
 
         MyBoxLayout:
@@ -46,6 +52,8 @@ kv = """
         
 
         BoxLayout:
+            spacing: 5
+            padding: 2
             size_hint_y: .04
             Button:
             # przycisk do dodawania rzeczy do FTP (ma byc strzalka ^)
@@ -56,6 +64,13 @@ kv = """
 
         MainFrame:
             size_hint_y: .45
+            # canvas.before:
+            # #     Color:
+            # #         rgba: (.3,.3,1,.9)
+            #     Rectangle:
+            #         source: "images/bckg.png"
+            #         size: self.size
+            #         pos: self.pos
 
 """
 
