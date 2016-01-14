@@ -91,8 +91,7 @@ class LocalFile(GridLayout):
 
             #image = Label(size_hint_x = .2, text="Image")
             btn = Button(text=str(item), size_hint_x = .8,
-                         background_color=(0,.3,0,1), color=(1,1,1,1), on_press=self.btn_press,
-                         background_normal="", background_pressed="")
+                         background_color=(0,.3,0,1), color=(1,1,1,1), on_press=self.btn_press)
 
             frame.sel = False # button selected to obtain button which was chosen
 
