@@ -10,6 +10,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.carousel import Carousel
 from kivy.lang import Builder
 from kivy.core.window import Window
+import os
 from localFileWindow import MainFrame
 from settings import SettingsLay
 
@@ -101,6 +102,7 @@ class MyApp(App):
     Window.fullscreen = False
     Window.size = (400, 800)
     def build(self):
+        self.MyPATH = os.getcwd()
         return Total()
 
 MyApp().run()

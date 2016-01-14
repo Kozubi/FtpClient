@@ -83,18 +83,18 @@ kv = """
 
 Builder.load_string(kv)
 
-
+path = os.getcwd()
 
 class MyPopup(ModalView):
     def __init__(self, **kwargs):
         super(ModalView, self).__init__(**kwargs)
-        self.Path = os.getcwd()
 
 
     def save_new(self, *args):
         print("SAVE_NEW")
+        print("path", path)
         # function to get text from text boxes
-        servers = open(self.Path +"\\" + 'server.json')
+        servers = open(path +"\\" + 'server.json')
         try:
             ServerDict = json.load(servers)
         except ValueError:
@@ -117,7 +117,7 @@ class MyPopup(ModalView):
                 p.open()
             else: # here stuff will be saved
                 ServerDict[temp_list[0]] = {"address":temp_list[1], "login":temp_list[2], "passw":temp_list[3]}
-                servers = open(self.Path +"\\" + 'server.json', 'w')
+                servers = open(path+"\\"+'server.json', 'w')
                 json.dump(ServerDict, servers)
                 servers.close()
                 self.dismiss()
@@ -131,25 +131,28 @@ class MyPopup(ModalView):
         # method to overwrite existing ftp profile
         print(data)
         #data=data.text
-        f = open("server.json", 'r')
+        f = open(path+"\\"+"server.json", 'r')
         myJson = json.load(f)
         f.close()
-        f = open("server.json", 'w')
+        f = open(path+"\\"+"server.json", 'w')
         myJson.pop(data)
         grid = self.children[0]
         inputItems = [i.text for i in grid.children[4:0:-1]]
         myJson[inputItems[0]] = {"address":inputItems[1], "login":inputItems[2], "passw":inputItems[3]}
         json.dump(myJson, f)
         f.close()
-        settingsView = self.parent.children[-1]
+        settingsView = self.parent.children[1].children[0].children[0]
+        print("settingsView", settingsView)
         settingsView.ids.myBox.clear_widgets()
         settingsView.ids.myBox.add_widget(Button(text="Dodaj nowy", size_hint_y=None, height=100,
-                                                 on_press=self.parent.children[1].opener))
+                                                 on_press=settingsView.opener))
         Clock.schedule_once(settingsView.serverList, 0.01)
         self.dismiss()
 
 class SettingsLay(BoxLayout):
     def __init__(self, **kwargs):
+        self.PTH = os.getcwd()
+        print(self.PTH)
         super(SettingsLay, self).__init__(**kwargs)
         Clock.schedule_once(self.serverList, 0.01)
 
@@ -157,7 +160,7 @@ class SettingsLay(BoxLayout):
         # will add new buttons to layout according to json read
         self.ids.myBox.height=0
         try:
-            servers = json.load(open("server.json"))
+            servers = json.load(open(self.PTH+"\\"+"server.json"))
             self.rows = len(servers.keys())
             for i in servers.keys():
                 # TODO add that Button will open popup window to delete or edit!
@@ -181,7 +184,7 @@ class SettingsLay(BoxLayout):
         # TODO overwrite "Zapisz" button action to overwrite entry
         self.p = MyPopup()
 
-        entryData = json.load(open("server.json"))
+        entryData = json.load(open(path+"\\"+"server.json"))
         data = entryData[btn.text]
 
         data = list(data.values())
