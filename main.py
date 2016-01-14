@@ -7,9 +7,11 @@ from kivy.uix.button import Button
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.carousel import Carousel
 from kivy.lang import Builder
 from kivy.core.window import Window
 from localFileWindow import MainFrame
+from settings import SettingsLay
 
 # TODO dodac klasy obiektow (plik, folder) w celu ich wyświetlania w oknach
 # TODO dodac metody przesylania/ kopiowania na FTP (ftplib)
@@ -33,23 +35,11 @@ kv = """
                     text: "Here will be file list"
 
 <MyBoxApp>:
-    canvas:
-        # Color:
-        #     rgba: (.7,.7,1,.9)
-        Rectangle:
-            source: "images/bckg.jpg"
-            size: self.size
-            pos: self.pos
-
     BoxLayout:
         orientation: "vertical"
-        Button:
-            text: "SETTINGS"
-            size_hint_y: 0.05
 
         MyBoxLayout:
             size_hint_y: .45
-        
 
         BoxLayout:
             spacing: 5
@@ -74,6 +64,18 @@ kv = """
             #         size: self.size
             #         pos: self.pos
 
+
+<Total>:
+    canvas:
+        # Color:
+        #     rgba: (.7,.7,1,.9)
+        Rectangle:
+            source: "images/bckg.jpg"
+            size: self.size
+            pos: self.pos
+    MyBoxApp:
+    SettingsLay:
+
 """
 
 
@@ -92,12 +94,14 @@ class MyBoxApp(BoxLayout):
     def __init__(self, **kwargs):
         super(MyBoxApp, self).__init__(**kwargs)
 
+class Total(Carousel):
+    pass
+
 class MyApp(App):
     Window.fullscreen = False
     Window.size = (400, 800)
     def build(self):
-        # display a button with the text : Hello QPython 
-        return MyBoxApp()
+        return Total()
 
 MyApp().run()
 

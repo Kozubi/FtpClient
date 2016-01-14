@@ -1,8 +1,9 @@
 import os
 
 
-# TODO still have no idea where to start in android (how ot get some kind
-# of absolute path
+# TODO still have no idea where to start in android (how ot get some kind of absolute path)
+
+# TODO FIX this os.chdir!!
 
 
 class myClass:

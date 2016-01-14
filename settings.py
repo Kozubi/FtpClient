@@ -200,10 +200,7 @@ class SettingsLay(BoxLayout):
         print(self.p.ids.ppBox)
         btn = Button(text="Zapisz", on_press=partial(self.p.overwrite, btn.text))
         self.p.ids.ppBox.add_widget(btn, index=0)
-        # b = BoxLayout(size_hint_y= 0.5)
-        # b.add_widget(Button())
-        # b.add_widget(Button())
-        # self.p.add_widget(b)
+
         self.p.open()
 
 
