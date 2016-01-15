@@ -176,6 +176,10 @@ class SettingsLay(BoxLayout):
                 self.ids.myBox.add_widget(btn)
                 self.ids.myBox.height += btn.height
             self.ids.myBox.height += self.ids.btnAdd.height
+        except FileNotFoundError:
+            f = open(self.PTH+"\\"+"server.json", 'w')
+            f.close()
+            self.serverList()
         except ValueError:
             pass
 
