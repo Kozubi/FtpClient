@@ -6,10 +6,13 @@ from kivy.uix.label import Label
 from kivy.clock import Clock
 import os
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.lang import Builder
 from kivy.core.window import Window
 from fileBrowser import myClass
+from kivymd.button import MDFlatButton
+from kivymd.label import MDLabel
 
 kv ="""
 <MyImage>:
@@ -21,12 +24,12 @@ kv ="""
             size: self.size
 
 <FileButton>
-    canvas:
-        Color:
-            rgba: (1,1,1,1)
-        Rectangle:
-            size: self.size
-            pos: self.pos
+    # canvas:
+    #     Color:
+    #         rgba: (1,1,1,1)
+    #     Rectangle:
+    #         size: self.size
+    #         pos: self.pos
 
 <LocalFile>:
     id: local
@@ -44,7 +47,7 @@ kv ="""
         height: 25
 
 
-    #FileChooserIconView
+    #FileChooserListView
     ScrollView:
         LocalFile:
             id: LocalFile
@@ -59,7 +62,7 @@ Builder.load_string(kv)
 class MyImage(Image):
     def __init__(self, **kwargs):
         super(MyImage, self).__init__(**kwargs)
-        self.size_hint_x = 0.15
+        self.size_hint_x = 0.1
 
 class Folder(MyImage):
     def __init__(self, **kwargs):
@@ -72,7 +75,7 @@ class File(MyImage):
         super(File, self).__init__(**kwargs)
         self.source = path +"\\" + "doc.png"
 
-class FileButton(BoxLayout):
+class FileButton(RelativeLayout):
     pass
 
 class MainFrame(BoxLayout):
@@ -99,10 +102,10 @@ class LocalFile(GridLayout):
             frame = FileButton(size_hint_y=None)
             #self.image = Image(size_hint_x= .05)#, color=(0,0,0,1))
             if os.path.isdir(item):
-                img = Folder()
-                label = Label(size_hint_x = .20, color=(0,0,0,1))
+                img = Folder(pos_hint={'x' :0, 'y':0})
+                label = Label(pos_hint={'x' :0.8, 'y':0}, size_hint_x = .20, color=(0,0,0,1))
             elif os.path.isfile(item):
-                img = File()#, source=self.POS + "\\folder265.png")
+                img = File(pos_hint={'x' :0.0, 'y':0})#, source=self.POS + "\\folder265.png")
                 size = os.path.getsize(item)
                 txt = " b"
                 if  size > 999999:
@@ -113,13 +116,12 @@ class LocalFile(GridLayout):
                     size /= 1000
                     size= str(size).split(".")[0]
                     txt = " kB"
-                label = Label(text=str(size) +txt, size_hint_x = .20, color=(0,0,0,1))
+                label = Label(text=str(size) +txt, size_hint_x = .05, color=(1,1,1,1),pos_hint={'x' :0.9, 'y':0})
 
 
             #image = Label(size_hint_x = .2, text="Image")
-            btn = Button(text=str(item), size_hint_x = .8,
-                         background_color=btnColor, color=(0,0,0,1), on_press=self.btn_press,
-                         background_normal="")
+            btn = Button(text=str(item), background_color=btnColor, on_press=self.btn_press, pos_hint={'x' : 0.1, 'y':0},
+                               size_hint_x=0.75)
 
             frame.sel = False # button selected to obtain button which was chosen
 
@@ -128,7 +130,7 @@ class LocalFile(GridLayout):
             frame.add_widget(btn)
             frame.add_widget(label)
             frame.selected = 0 # will be used for toggle
-            frame.height = 45
+            frame.height = 32
             frame.background_color = (1,1,1,1)#(0,1,.2,1)
             self.add_widget(frame)
             h += frame.height

@@ -11,6 +11,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.lang import Builder
 from kivy.core.window import Window
 from functools import partial
+from kivymd.button import MDFlatButton
 
 
 kv = """
@@ -51,17 +52,20 @@ kv = """
             spacing: 20
             size_hint_y: .5
             id: ppBox
-            Button:
+            MDFlatButton:
                 text: "Anuluj"
-                font_size: self.height/2
+                #font_size: self.height/2
+                size_hint_x: 0.4
                 on_press: root.dismiss()
-            Button:
+            MDFlatButton:
                 id: btnSave
                 text: "Zapisz"
-                font_size: self.height/2
+                #f#ont_size: self.height/2
+                size_hint_x: 0.4
                 on_press: root.save_new()
 
-
+<MyButton>:
+    size_hint_x: 0.4
 
 
 <SettingsLay>:
@@ -84,6 +88,9 @@ kv = """
 Builder.load_string(kv)
 
 path = os.getcwd()
+
+class MyButton(MDFlatButton):
+    pass
 
 class MyPopup(ModalView):
     def __init__(self, **kwargs):
@@ -142,11 +149,12 @@ class MyPopup(ModalView):
         json.dump(myJson, f)
         f.close()
         settingsView = self.parent.children[1].children[0].children[0]
-        print("settingsView", settingsView)
-        settingsView.ids.myBox.clear_widgets()
-        settingsView.ids.myBox.add_widget(Button(text="Dodaj nowy", size_hint_y=None, height=100,
-                                                 on_press=settingsView.opener))
-        Clock.schedule_once(settingsView.serverList, 0.01)
+        print("settingsView", settingsView.children)
+        settingsView.clear_widgets()
+        # self.parent.children[1] - this is SettingsLay
+        settingsView.add_widget(Button(text="Dodaj nowy", size_hint_y=None, height=100,
+                                                 on_press=self.parent.children[1].opener))
+        Clock.schedule_once(self.parent.children[1].serverList, 0.01)
         self.dismiss()
 
 class SettingsLay(BoxLayout):
@@ -201,7 +209,7 @@ class SettingsLay(BoxLayout):
 
         self.p.ids.ppBox.remove_widget(self.p.ids.btnSave)
         print(self.p.ids.ppBox)
-        btn = Button(text="Zapisz", on_press=partial(self.p.overwrite, btn.text))
+        btn = MyButton(text="Zapisz", on_press=partial(self.p.overwrite, btn.text))
         self.p.ids.ppBox.add_widget(btn, index=0)
 
         self.p.open()

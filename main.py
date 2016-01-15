@@ -10,6 +10,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.carousel import Carousel
 from kivy.lang import Builder
 from kivy.core.window import Window
+from kivymd.button import MDFlatButton
 import os
 from localFileWindow import MainFrame
 from settings import SettingsLay
@@ -42,17 +43,24 @@ kv = """
         MyBoxLayout:
             size_hint_y: .45
 
-        BoxLayout:
+        RelativeLayout:
             spacing: 5
             padding: 2
             size_hint_y: .04
-            Button:
+            MDFlatButton:
             # przycisk do dodawania rzeczy do FTP (ma byc strzalka ^)
                 text: "+"
                 on_press: root.ids.MainFrame.ids.LocalFile.getting_sel_files()
-            Button:
+                background_color: (0,0,0,.5)
+                size_hint_x: 0.2
+                pos_hint: {'x':0, 'y':0}
+
+            MDFlatButton:
             # przycisk do usuwania - przezucania rzeczy z FTP (ma byc strzalka w dol)
                 text: "-"
+                background_color: (0,0,0,.1)
+                size_hint_x: 0.2
+                pos_hint: {'x':0.8, 'y':0}
 
         MainFrame:
             id: MainFrame
