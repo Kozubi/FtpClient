@@ -71,7 +71,7 @@ kv = """
         # Color:
         #     rgba: (.7,.7,1,.9)
         Rectangle:
-            source: "images/bckg.jpg"
+            source: "images/bck2.jpg"
             size: self.size
             pos: self.pos
     MyBoxApp:

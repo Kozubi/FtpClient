@@ -19,6 +19,7 @@ class myClass:
 
     def work(self):
         # function for getting all files/folders in selected directory
+        # TODO fix (on py3) Permission Error
         os.chdir(self.PATH)
         print("PATH", self.PATH)
         for item in os.listdir(self.PATH):
